@@ -1,0 +1,27 @@
+---
+- name: Lighthouse | Install git and nginx
+  become: true
+  ansible.builtin.yum:
+    disable_gpg_check: true
+    update_cache: true
+    name:
+      - git
+      - nginx
+    state: present
+- name: Lighthouse | Create lighthouse config
+  become: true
+  ansible.builtin.template:
+    src: lighthouse-nginx.conf.j2
+    dest: /etc/nginx/conf.d/lighthouse-nginx.conf
+    mode: "0644"
+- name: Lighthouse | Reload nginx
+  become: true
+  ansible.builtin.systemd:
+    name: nginx
+    state: reloaded
+- name: Lighthouse | Clone lighthouse repo
+  become: true
+  ansible.builtin.git:
+    repo: https://github.com/VKCOM/lighthouse.git
+    version: master
+    dest: /opt/lighthouse
