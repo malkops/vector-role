@@ -1,14 +1,16 @@
 Role Name
 =========
 
-Install lighthouse on rhel os
+Install vector 0.30 on rhel os
 
 Example Playbook
 ----------------
 
+```yml
 - hosts: servers
   roles:
-      - lighthouse-role
+      - vector-role
+```
 
 License
 -------
